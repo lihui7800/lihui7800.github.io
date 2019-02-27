@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="//gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mutex &middot; lihui7800</title>
+
+  
+  <link type="text/css" rel="stylesheet" href="https://lihui7800.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="https://lihui7800.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="https://lihui7800.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="https://lihui7800.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="lihui7800" />
+
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://lihui7800.github.io/"><h1>lihui7800</h1></a>
+      <p class="lead">
+       这里是lihui7800的个人博客 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="https://lihui7800.github.io/">Home</a> </li>
+        <li><a href="/welcome/"> Welcome </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2019. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Mutex</h1>
+  <time datetime=2019-02-27T20:19:57&#43;0800 class="post-date">Wed, Feb 27, 2019</time>
+  
+
+<h4 id="1-竞态的出现原因">1,竞态的出现原因</h4>
+
+<blockquote>
+<p>竞态的产生是因为多个对象同时访问一个对象的时候就会产生。
+最常见的例子是数据库。</p>
+
+<p>在开发中多线程首先面对的问题就是如何竞争资源。</p>
+</blockquote>
+
+<p>例子来源于网络,大致应该是：</p>
+
+<pre><code>var a = 0
+
+func run() {
+	for i := 0; i &lt; 1000; i++ {
+		go add()
+	}
+	time.Sleep(10 * time.Minute)
+	fmt.Println(a)
+}
+
+func add() {
+	a++
+}
+</code></pre>
+
+<blockquote>
+<p>请允许我使用 ==time.Sleep()== 来让主线程等待结果。其实也可以使用waitgroup来调度1000个协程的。</p>
+
+<p>上面的例子可以得出的结果是不一定，如果1000个协程按照顺序进行处理的话结果应该是1000.</p>
+</blockquote>
+
+<h4 id="2-要处理竞态-golang提供了一个库-sync-看名字就知道是和竞态有关系的">2, 要处理竞态，golang提供了一个库，sync 看名字就知道是和竞态有关系的。</h4>
+
+<blockquote>
+<p>Mutex 互斥锁
+1. 首先看下源码：</p>
+</blockquote>
+
+<pre><code>package sync
+
+import (
+	&quot;internal/race&quot;
+	&quot;sync/atomic&quot;
+	&quot;unsafe&quot;
+)
+
+func throw(string) // provided by runtime
+
+// A Mutex is a mutual exclusion lock.
+// The zero value for a Mutex is an unlocked mutex.
+//
+// A Mutex must not be copied after first use.
+type Mutex struct {
+	state int32
+	sema  uint32
+}
+</code></pre>
+
+<blockquote>
+<p>第一句是 互斥锁就是互相排斥的锁。</p>
+
+<p>第二句是 没有上锁的互斥锁的互斥量是0</p>
+
+<p>第三句是 互斥锁一旦使用将不能被复制</p>
+
+<p>这三句话也告诉了我们使用互斥锁的时候需要注意的几个点。</p>
+</blockquote>
+
+<p>。</p>
+
+<h4 id="2-根据官方提供的工具进行处理竞态问题">2,根据官方提供的工具进行处理竞态问题</h4>
+
+<blockquote>
+<p>回过头来继续解决刚才的竞态问题。我们产生的竞态其实主要是读取数据，如果不排队的话会产生脏读</p>
+</blockquote>
+
+<pre><code>var (
+	a  = 0
+	wg = sync.WaitGroup{}
+	m  = sync.Mutex{}
+)
+
+func Run() {
+	for i := 0; i &lt; 1000; i++ {
+		wg.Add(1)
+		go add()
+	}
+	wg.Wait()
+	fmt.Println(a)
+}
+
+func add() {
+	m.Lock()
+	defer m.Unlock()
+	a++
+	wg.Done()
+}
+</code></pre>
+
+<blockquote>
+<p>经过Mutex的处理，我们得到的结果一定是1000.因为每次锁释放之后才会进行下一次调用。</p>
+
+<p>切记锁一定要是公共的。不然达不到效果。也不能复制的。</p>
+
+<p>==GOLANG== 的==并发哲学:==</p>
+
+<pre><code>Do not communicate through shared memory, but share memory by communication.
+不要通过共享内存来通信，而应该通过通信来共享内存
+</code></pre>
+
+<p>最后给大家一个思考：还记得sync库的开始吗？下面这句话。</p>
+</blockquote>
+
+<pre><code>func throw(string) // provided by runtime
+</code></pre>
+
+<blockquote>
+<p>这句话是干嘛的？实现了什么功能呢？</p>
+</blockquote>
+
+</div>
+
+
+    </main>
+
+    
+  </body>
+</html>

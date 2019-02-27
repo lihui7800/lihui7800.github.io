@@ -53,6 +53,23 @@
     <div class="posts">
 <article class="post">
   <h1 class="post-title">
+    <a href="https://lihui7800.github.io/golang/mutex/">Mutex</a>
+  </h1>
+  <time datetime="2019-02-27T20:19:57&#43;0800" class="post-date">Wed, Feb 27, 2019</time>
+  1,竞态的出现原因  竞态的产生是因为多个对象同时访问一个对象的时候就会产生。 最常见的例子是数据库。
+在开发中多线程首先面对的问题就是如何竞争资源。
+ 例子来源于网络,大致应该是：
+var a = 0 func run() { for i := 0; i &lt; 1000; i++ { go add() } time.Sleep(10 * time.Minute) fmt.Println(a) } func add() { a++ }   请允许我使用 ==time.Sleep()== 来让主线程等待结果。其实也可以使用waitgroup来调度1000个协程的。
+上面的例子可以得出的结果是不一定，如果1000个协程按照顺序进行处理的话结果应该是1000.
+ 2, 要处理竞态，golang提供了一个库，sync 看名字就知道是和竞态有关系的。  Mutex 互斥锁 1. 首先看下源码：
+ package sync import ( &quot;internal/race&quot; &quot;sync/atomic&quot; &quot;unsafe&quot; ) func throw(string) // provided by runtime // A Mutex is a mutual exclusion lock.
+  
+  <div class="read-more-link">
+    <a href="/golang/mutex/">Read More…</a>
+  </div>
+  
+</article><article class="post">
+  <h1 class="post-title">
     <a href="https://lihui7800.github.io/welcome/">Welcome</a>
   </h1>
   <time datetime="2019-02-27T16:18:02&#43;0800" class="post-date">Wed, Feb 27, 2019</time>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>lihui7800</title>
-    <link>https://lihui7800.github.io/</link>
-    <description>Recent content on lihui7800</description>
+    <title>Golangs on lihui7800</title>
+    <link>https://lihui7800.github.io/golang/</link>
+    <description>Recent content in Golangs on lihui7800</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 27 Feb 2019 20:19:57 +0800</lastBuildDate>
     
-	<atom:link href="https://lihui7800.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://lihui7800.github.io/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -24,15 +24,6 @@ var a = 0 func run() { for i := 0; i &amp;lt; 1000; i++ { go add() } time.Sleep(
 上面的例子可以得出的结果是不一定，如果1000个协程按照顺序进行处理的话结果应该是1000.
  2, 要处理竞态，golang提供了一个库，sync 看名字就知道是和竞态有关系的。  Mutex 互斥锁 1. 首先看下源码：
  package sync import ( &amp;quot;internal/race&amp;quot; &amp;quot;sync/atomic&amp;quot; &amp;quot;unsafe&amp;quot; ) func throw(string) // provided by runtime // A Mutex is a mutual exclusion lock.</description>
-    </item>
-    
-    <item>
-      <title>Welcome</title>
-      <link>https://lihui7800.github.io/welcome/</link>
-      <pubDate>Wed, 27 Feb 2019 16:18:02 +0800</pubDate>
-      
-      <guid>https://lihui7800.github.io/welcome/</guid>
-      <description>这是使用Hugo创建的站点中的第一篇文章。</description>
     </item>
     
   </channel>
