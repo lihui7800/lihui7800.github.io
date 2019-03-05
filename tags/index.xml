@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on lihui7800</title>
-    <link>https://lihui7800.github.io/tags/</link>
+    <link>http://lihui7800.github.io/tags/</link>
     <description>Recent content in Tags on lihui7800</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 27 Feb 2019 16:18:02 +0800</lastBuildDate>
     
-	<atom:link href="https://lihui7800.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://lihui7800.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Development</title>
-      <link>https://lihui7800.github.io/tags/development/</link>
+      <link>http://lihui7800.github.io/tags/development/</link>
       <pubDate>Wed, 27 Feb 2019 16:18:02 +0800</pubDate>
       
-      <guid>https://lihui7800.github.io/tags/development/</guid>
+      <guid>http://lihui7800.github.io/tags/development/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Golang</title>
-      <link>https://lihui7800.github.io/tags/golang/</link>
+      <link>http://lihui7800.github.io/tags/golang/</link>
       <pubDate>Wed, 27 Feb 2019 16:18:02 +0800</pubDate>
       
-      <guid>https://lihui7800.github.io/tags/golang/</guid>
+      <guid>http://lihui7800.github.io/tags/golang/</guid>
       <description></description>
     </item>
     

@@ -3,59 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://lihui7800.github.io/golang/mutex/</loc>
-    <lastmod>2019-02-27T20:19:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lihui7800.github.io/welcome/</loc>
+    <loc>http://lihui7800.github.io/welcome/</loc>
     <lastmod>2019-02-27T16:18:02+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://lihui7800.github.io/categories/</loc>
+    <loc>http://lihui7800.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://lihui7800.github.io/tags/development/</loc>
+    <loc>http://lihui7800.github.io/categories/development/</loc>
     <lastmod>2019-02-27T16:18:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://lihui7800.github.io/categories/development/</loc>
+    <loc>http://lihui7800.github.io/tags/development/</loc>
     <lastmod>2019-02-27T16:18:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://lihui7800.github.io/tags/golang/</loc>
+    <loc>http://lihui7800.github.io/categories/golang/</loc>
     <lastmod>2019-02-27T16:18:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://lihui7800.github.io/categories/golang/</loc>
+    <loc>http://lihui7800.github.io/tags/golang/</loc>
     <lastmod>2019-02-27T16:18:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://lihui7800.github.io/golang/</loc>
-    <lastmod>2019-02-27T20:19:57+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://lihui7800.github.io/tags/</loc>
+    <loc>http://lihui7800.github.io/tags/</loc>
     <lastmod>2019-02-27T16:18:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://lihui7800.github.io/</loc>
-    <lastmod>2019-02-27T20:19:57+08:00</lastmod>
+    <loc>http://lihui7800.github.io/</loc>
+    <lastmod>2019-02-27T16:18:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
