@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on lihui7800</title>
-    <link>http://lihui7800.github.io/categories/</link>
+    <link>https://lihui7800.github.io/categories/</link>
     <description>Recent content in Categories on lihui7800</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="http://lihui7800.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://lihui7800.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Development</title>
-      <link>http://lihui7800.github.io/categories/development/</link>
+      <link>https://lihui7800.github.io/categories/development/</link>
       <pubDate>Wed, 27 Feb 2019 16:18:02 +0800</pubDate>
       
-      <guid>http://lihui7800.github.io/categories/development/</guid>
+      <guid>https://lihui7800.github.io/categories/development/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Golang</title>
-      <link>http://lihui7800.github.io/categories/golang/</link>
+      <link>https://lihui7800.github.io/categories/golang/</link>
       <pubDate>Wed, 27 Feb 2019 16:18:02 +0800</pubDate>
       
-      <guid>http://lihui7800.github.io/categories/golang/</guid>
+      <guid>https://lihui7800.github.io/categories/golang/</guid>
       <description></description>
     </item>
     

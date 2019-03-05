@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Golang on lihui7800</title>
-    <link>http://lihui7800.github.io/tags/golang/</link>
+    <link>https://lihui7800.github.io/tags/golang/</link>
     <description>Recent content in Golang on lihui7800</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 27 Feb 2019 16:18:02 +0800</lastBuildDate>
     
-	<atom:link href="http://lihui7800.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://lihui7800.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Welcome</title>
-      <link>http://lihui7800.github.io/welcome/</link>
+      <link>https://lihui7800.github.io/welcome/</link>
       <pubDate>Wed, 27 Feb 2019 16:18:02 +0800</pubDate>
       
-      <guid>http://lihui7800.github.io/welcome/</guid>
+      <guid>https://lihui7800.github.io/welcome/</guid>
       <description>这是使用Hugo创建的站点中的第一篇文章。</description>
     </item>
     
