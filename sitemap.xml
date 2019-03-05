@@ -23,25 +23,25 @@
   </url>
   
   <url>
-    <loc>http://lihui7800.github.io/tags/development/</loc>
-    <lastmod>2019-02-27T16:18:02+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://lihui7800.github.io/categories/development/</loc>
     <lastmod>2019-02-27T16:18:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://lihui7800.github.io/tags/golang/</loc>
+    <loc>http://lihui7800.github.io/tags/development/</loc>
     <lastmod>2019-02-27T16:18:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://lihui7800.github.io/categories/golang/</loc>
+    <lastmod>2019-02-27T16:18:02+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://lihui7800.github.io/tags/golang/</loc>
     <lastmod>2019-02-27T16:18:02+08:00</lastmod>
     <priority>0</priority>
   </url>
