@@ -1,59 +1,126 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<html lang="zh-cn">
 <head>
-  <link href="//gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.54.0" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Mutex - lihui7800 个人博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
-  <title>Mutex &middot; lihui7800</title>
-
-  
-  <link type="text/css" rel="stylesheet" href="https://lihui7800.github.io/css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://lihui7800.github.io/css/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://lihui7800.github.io/css/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://lihui7800.github.io/css/hyde.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-  
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
+<meta name="author" content="lihui7800" /><meta name="description" content="1,竞态的出现原因 竞态的产生是因为多个对象同时访问一个对象的时候就会产生。 最常见的例子是数据库。 在开发中多线程首先面对的问题就是如何竞争资源" /><meta name="keywords" content="golang, mutex, 302" />
 
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="lihui7800" />
 
-  
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://lihui7800.github.io/golang/mutex/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Mutex" />
+<meta property="og:description" content="1,竞态的出现原因 竞态的产生是因为多个对象同时访问一个对象的时候就会产生。 最常见的例子是数据库。 在开发中多线程首先面对的问题就是如何竞争资源" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lihui7800.github.io/golang/mutex/" />
+<meta property="article:published_time" content="2019-02-27T20:19:57&#43;08:00"/>
+<meta property="article:modified_time" content="2019-02-27T20:19:57&#43;08:00"/>
+
+<meta itemprop="name" content="Mutex">
+<meta itemprop="description" content="1,竞态的出现原因 竞态的产生是因为多个对象同时访问一个对象的时候就会产生。 最常见的例子是数据库。 在开发中多线程首先面对的问题就是如何竞争资源">
+
+
+<meta itemprop="datePublished" content="2019-02-27T20:19:57&#43;08:00" />
+<meta itemprop="dateModified" content="2019-02-27T20:19:57&#43;08:00" />
+<meta itemprop="wordCount" content="716">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mutex"/>
+<meta name="twitter:description" content="1,竞态的出现原因 竞态的产生是因为多个对象同时访问一个对象的时候就会产生。 最常见的例子是数据库。 在开发中多线程首先面对的问题就是如何竞争资源"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
 </head>
-
-  <body class=" ">
-  <aside class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      <a href="https://lihui7800.github.io/"><h1>lihui7800</h1></a>
-      <p class="lead">
-       这里是lihui7800的个人博客 
-      </p>
-    </div>
-
-    <nav>
-      <ul class="sidebar-nav">
-        <li><a href="https://lihui7800.github.io/">Home</a> </li>
-        
-      </ul>
-    </nav>
-
-    <p>&copy; 2019. All rights reserved. </p>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">lihui7800</a>
   </div>
-</aside>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">lihui7800</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/golang/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">lihui7800</a>
+</div>
 
-    <main class="content container">
-    <div class="post">
-  <h1>Mutex</h1>
-  <time datetime=2019-02-27T20:19:57&#43;0800 class="post-date">Wed, Feb 27, 2019</time>
-  
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">lihui7800</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/golang/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+  <div class="post-content">
+    
 
 <h4 id="1-竞态的出现原因">1,竞态的出现原因</h4>
 
@@ -65,8 +132,24 @@
 </blockquote>
 
 <p>例子来源于网络,大致应该是：</p>
-
-<pre><code>var a = 0
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">var a = 0
 
 func run() {
 	for i := 0; i &lt; 1000; i++ {
@@ -78,9 +161,9 @@ func run() {
 
 func add() {
 	a++
-}
-</code></pre>
-
+}</pre></td></tr></table>
+</div>
+</div>
 <blockquote>
 <p>请允许我使用 ==time.Sleep()== 来让主线程等待结果。其实也可以使用waitgroup来调度1000个协程的。</p>
 
@@ -93,27 +176,48 @@ func add() {
 <p>Mutex 互斥锁
 1. 首先看下源码：</p>
 </blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"><span class="kn">package</span> <span class="nx">sync</span>
 
-<pre><code>package sync
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;internal/race&#34;</span>
+	<span class="s">&#34;sync/atomic&#34;</span>
+	<span class="s">&#34;unsafe&#34;</span>
+<span class="p">)</span>
 
-import (
-	&quot;internal/race&quot;
-	&quot;sync/atomic&quot;
-	&quot;unsafe&quot;
-)
-
-func throw(string) // provided by runtime
-
-// A Mutex is a mutual exclusion lock.
-// The zero value for a Mutex is an unlocked mutex.
-//
-// A Mutex must not be copied after first use.
-type Mutex struct {
-	state int32
-	sema  uint32
-}
-</code></pre>
-
+<span class="kd">func</span> <span class="nf">throw</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span> <span class="c1">// provided by runtime
+</span><span class="c1"></span>
+<span class="c1">// A Mutex is a mutual exclusion lock.
+</span><span class="c1">// The zero value for a Mutex is an unlocked mutex.
+</span><span class="c1">//
+</span><span class="c1">// A Mutex must not be copied after first use.
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Mutex</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">state</span> <span class="kt">int32</span>
+	<span class="nx">sema</span>  <span class="kt">uint32</span>
+<span class="p">}</span></pre></td></tr></table>
+</div>
+</div>
 <blockquote>
 <p>第一句是 互斥锁就是互相排斥的锁。</p>
 
@@ -131,8 +235,32 @@ type Mutex struct {
 <blockquote>
 <p>回过头来继续解决刚才的竞态问题。我们产生的竞态其实主要是读取数据，如果不排队的话会产生脏读</p>
 </blockquote>
-
-<pre><code>var (
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">var (
 	a  = 0
 	wg = sync.WaitGroup{}
 	m  = sync.Mutex{}
@@ -152,35 +280,106 @@ func add() {
 	defer m.Unlock()
 	a++
 	wg.Done()
-}
-</code></pre>
-
+}</pre></td></tr></table>
+</div>
+</div>
 <blockquote>
 <p>经过Mutex的处理，我们得到的结果一定是1000.因为每次锁释放之后才会进行下一次调用。</p>
 
 <p>切记锁一定要是公共的。不然达不到效果。也不能复制的。</p>
 
 <p>==GOLANG== 的==并发哲学:==</p>
-
-<pre><code>Do not communicate through shared memory, but share memory by communication.
-不要通过共享内存来通信，而应该通过通信来共享内存
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Do not communicate through shared memory, but share memory by communication.
+不要通过共享内存来通信，而应该通过通信来共享内存</pre></td></tr></table>
+</div>
+</div>
 <p>最后给大家一个思考：还记得sync库的开始吗？下面这句话。</p>
 </blockquote>
-
-<pre><code>func throw(string) // provided by runtime
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func throw(string) // provided by runtime</pre></td></tr></table>
+</div>
+</div>
 <blockquote>
 <p>这句话是干嘛的？实现了什么功能呢？</p>
 </blockquote>
 
-</div>
+  </div>
+</article>
+        </div>
+        
 
-
+      </div>
     </main>
 
-    
-  </body>
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="http://localhost:1313" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="http://localhost:1313" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="http://localhost:1313" class="iconfont icon-google" title="google"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+      <a href="http://localhost:1313" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="http://localhost:1313" class="iconfont icon-douban" title="douban"></a>
+      <a href="http://localhost:1313" class="iconfont icon-pocket" title="pocket"></a>
+      <a href="http://localhost:1313" class="iconfont icon-tumblr" title="tumblr"></a>
+      <a href="http://localhost:1313" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="http://localhost:1313" class="iconfont icon-gitlab" title="gitlab"></a>
+      <a href="http://localhost:1313" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://lihui7800.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">lihui7800</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
 </html>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on lihui7800</title>
+    <title>Categories on lihui7800 个人博客</title>
     <link>https://lihui7800.github.io/categories/</link>
-    <description>Recent content in Categories on lihui7800</description>
+    <description>Recent content in Categories on lihui7800 个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     
 	<atom:link href="https://lihui7800.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -20,7 +20,7 @@
     </item>
     
     <item>
-      <title>Golang</title>
+      <title>GoLang</title>
       <link>https://lihui7800.github.io/categories/golang/</link>
       <pubDate>Wed, 27 Feb 2019 16:18:02 +0800</pubDate>
       
