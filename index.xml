@@ -6,10 +6,19 @@
     <description>Recent content on lihui7800 个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 04 Mar 2019 19:33:33 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 21 Mar 2019 17:24:30 +0800</lastBuildDate>
     
 	<atom:link href="https://lihui7800.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Panic</title>
+      <link>https://lihui7800.github.io/golang/panic/</link>
+      <pubDate>Thu, 21 Mar 2019 17:24:30 +0800</pubDate>
+      
+      <guid>https://lihui7800.github.io/golang/panic/</guid>
+      <description>程序panic之后 go 程序的错误处理很多人都说有问题，能够写吐了。其实和panic比起来，还可以吧，毕竟error是可以捕获的，而且还能根据错</description>
+    </item>
     
     <item>
       <title>http 302跳转的思考</title>
